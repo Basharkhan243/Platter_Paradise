@@ -1,28 +1,36 @@
 'use strict';
+
+
+
 /**
  * PRELOAD
  * 
  * loading will be end after document is loaded
  */
 
-const preloader= document.querySelector("[data-preload]");
-window.addEventListener("load",function(){
-    preloader.classList.add("loaded");
-    document.body.classList.add("loaded");
+const preloader = document.querySelector("[data-preaload]");
+
+window.addEventListener("load", function () {
+  preloader.classList.add("loaded");
+  document.body.classList.add("loaded");
 });
 
 
-// add event listener an multiple elements
+
+/**
+ * add event listener on multiple elements
+ */
 
 const addEventOnElements = function (elements, eventType, callback) {
-    for (let i = 0, len = elements.length; i < len; i++) {
-      elements[i].addEventListener(eventType, callback);
-    }
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].addEventListener(eventType, callback);
   }
+}
 
 
-  /**
- * Navbar
+
+/**
+ * NAVBAR
  */
 
 const navbar = document.querySelector("[data-navbar]");
@@ -38,7 +46,10 @@ const toggleNavbar = function () {
 addEventOnElements(navTogglers, "click", toggleNavbar);
 
 
-// Header
+
+/**
+ * HEADER & BACK TOP BTN
+ */
 
 const header = document.querySelector("[data-header]");
 const backTopBtn = document.querySelector("[data-back-top-btn]");
@@ -66,6 +77,7 @@ window.addEventListener("scroll", function () {
     backTopBtn.classList.remove("active");
   }
 });
+
 
 
 /**
@@ -110,3 +122,22 @@ const slidePrev = function () {
 
 heroSliderPrevBtn.addEventListener("click", slidePrev);
 
+/**
+ * auto slide
+ */
+
+let autoSlideInterval;
+
+const autoSlide = function () {
+  autoSlideInterval = setInterval(function () {
+    slideNext();
+  }, 7000);
+}
+
+addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function () {
+  clearInterval(autoSlideInterval);
+});
+
+addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
+
+window.addEventListener("load", autoSlide);

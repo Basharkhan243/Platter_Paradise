@@ -18,29 +18,32 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    {% comment %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endcomment %}
   </head>
   <body>
     <!-- This Nav Area -->
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <form method="POST" action="{% url 'menuapp' %}" class="mx-auto">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input
+            type="text"
+            class="inp h-3"
+            placeholder="Search Here"
+            name="search"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
 
-    <div class="container">
-      <form method="POST" action="{% url 'menuapp' %}">
-        {% csrf_token %} {{ form.as_p }}
-        <input
-          type="text"
-          class="inp"
-          placeholder="Search Here"
-          name="search"
-        />
-        <button type="submit">Search</button>
-      </form>
-    </div>
-
+   
     {% comment %} This is Search Result Boxes {% endcomment %}
 
-    <div class="box-container row row-cols-md-3 row-cols-lg-4">
+    <div class="box-container row row-cols-md-3 row-cols-lg-4 mr-3">
       {% for pic in res %}
-      <div class="card bg-white mt-4 mr-4" style="width: 18rem">
+      <div class="card bg-white mt-4 mr-4 mb-4 m-4" style="width: 18rem">
         <img src="{{pic.imageval.url}}" class="card-img-top" alt="SGauravir " />
         <div class="card-body">
           <h5 class="card-title">{{ pic.imageName }}</h5>
